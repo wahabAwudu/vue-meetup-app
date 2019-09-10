@@ -14,6 +14,7 @@
           </div>
 
           <button type="button" @click="login" class="btn btn-primary">Login</button>
+          <router-link to="/register">register?</router-link>
         </form>
       </div>
     </div>

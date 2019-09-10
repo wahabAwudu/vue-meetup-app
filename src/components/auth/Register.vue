@@ -19,13 +19,14 @@
           </div>
 
           <button type="button" @click="register" class="btn btn-primary">Register</button>
+          <router-link to="/login">login?</router-link>
         </form>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { registerUrl } from "@/config";
+import { registerUrl, errorToast, successToast } from "@/config";
 import axios from "axios";
 
 export default {
@@ -49,10 +50,11 @@ export default {
       axios
         .post(registerUrl, payload)
         .then(res => {
-          this.$router.push("/login");
+          successToast(this, "Registration successful!");
+          this.$router.replace("/login");
         })
         .catch(err => {
-          alert("error ocurred");
+          errorToast(this, "Registration error, retry", err);
         });
     }
   }
