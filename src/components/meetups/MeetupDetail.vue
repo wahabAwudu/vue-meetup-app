@@ -60,7 +60,6 @@ import {
 } from "@/config";
 import axios from "axios";
 import Logout from "@/components/auth/Logout";
-import SortJsonArray from "sort-json-array";
 
 export default {
   name: "Home",
