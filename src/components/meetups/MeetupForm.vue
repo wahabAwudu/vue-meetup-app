@@ -22,7 +22,7 @@
   </div>
 </template>
 <script>
-import { meetupsUrl, getHeaders } from "@/config";
+import { meetupsUrl, getHeaders, successToast, errorToast } from "@/config";
 import axios from "axios";
 import Logout from "@/components/auth/Logout";
 
@@ -48,10 +48,11 @@ export default {
       axios
         .post(meetupsUrl, payload, { headers: getHeaders() })
         .then(res => {
-          this.$router.push("/");
+          successToast(this, "meetup added!");
+          this.$router.replace("/");
         })
         .catch(err => {
-          alert("error");
+          errorToast(this, "error adding meetup, retry.", error);
         });
     }
   }
