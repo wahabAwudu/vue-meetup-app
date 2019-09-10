@@ -60,6 +60,7 @@ import {
 } from "@/config";
 import axios from "axios";
 import Logout from "@/components/auth/Logout";
+import SortJsonArray from "sort-json-array";
 
 export default {
   name: "Home",
@@ -83,9 +84,9 @@ export default {
       .get(meetupsUrl + this.id + "/", { headers: getHeaders() })
       .then(res => {
         this.meetup = res.data;
-        this.questions = res.data.questions;
-        // this.downvotes = res.data.questions.downvotes;
-        // this.upvotes = res.data.questions.upvotes;
+        this.questions = res.data.questions.sort(
+          (a, b) => b.upvotes - a.upvotes
+        );
       })
       .catch(err => {
         errorToast(this, "error connecting to server", err);
@@ -124,6 +125,7 @@ export default {
               this.questions.splice(index, 1, res.data);
             }
           });
+          this.questions.sort((a, b) => b.upvotes - a.upvotes);
           successToast(this, "done!");
         })
         .catch(err => {
