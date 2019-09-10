@@ -14,6 +14,7 @@
             <p>{{meetup.description}}</p>
           </div>
         </div>
+        <p v-if="meetups.length === 0">No Meetups Available</p>
         <br />
         <router-link to="/meetups/add-new" class="btn btn-primary">add new</router-link>
         <Logout></Logout>
@@ -24,7 +25,7 @@
 
 <script>
 /* eslint-disable */
-import { meetupsUrl, questionsUrl, getHeaders } from "@/config";
+import { meetupsUrl, questionsUrl, getHeaders, errorToast } from "@/config";
 import axios from "axios";
 import Logout from "@/components/auth/Logout";
 
@@ -48,7 +49,7 @@ export default {
         this.meetups = res.data;
       })
       .catch(err => {
-        alert("error");
+        errorToast(this, "error, retry.", err);
       });
   },
 

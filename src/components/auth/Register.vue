@@ -1,23 +1,27 @@
 <template>
-  <div class="text-center">
-    <form>
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" v-model="username" class="form-control" name="username" />
-      </div>
+  <div class="container text-center mt-5">
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <form>
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" v-model="username" class="form-control" name="username" />
+          </div>
 
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" v-model="email" class="form-control" name="email" />
-      </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" v-model="email" class="form-control" name="email" />
+          </div>
 
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" v-model="password" class="form-control" name="password" />
-      </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" v-model="password" class="form-control" name="password" />
+          </div>
 
-      <button type="button" @click="register" class="btn btn-primary">Register</button>
-    </form>
+          <button type="button" @click="register" class="btn btn-primary">Register</button>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
 <script>
