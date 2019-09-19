@@ -1,16 +1,24 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-md-8 offset-md-2">
-        <h1 class="mt-5 text-center text-primary">Meet-Ups</h1>
+      <div class="col-md-8 offset-md-2 mb-5">
+        <div class="mt-5">
+          <router-link to="/" class="btn btn-primary">All Meetups</router-link>
+          <Logout></Logout>
+        </div>
+        <h5 class="mb-5 mt-5 text-center">Questions are arranged by highest upvotes in real time!</h5>
 
         <div class="card mt-2">
           <div class="card-header">
-            <h3 class="text-primary">{{meetup.title}}</h3>
+            <h3 class="text-primary">{{meetup.title.toUpperCase()}}</h3>
+            <p class="text-secondary">{{meetup.description}}</p>
+            <p class="text-secondary">{{meetup.venue}}</p>
+            <p class="text-secondary">{{meetup.date}}</p>
           </div>
           <div class="card-body">
             <!-- questions -->
             <div class="card">
+              <div class="card-header">Questions: {{questions.length}}</div>
               <div class="card-body" v-for="q in questions" :key="q.id">
                 <p>{{q.text}}</p>
                 <div class="row">
@@ -34,7 +42,12 @@
             <!-- end questions -->
             <form>
               <div class="form-group mt-3">
-                <input type="text" class="form-control" v-model="question" />
+                <input type="text" class="form-control" v-model="question" placeholder="ask here.." />
+                <div v-if="serverErrors.text">
+                  <ul>
+                    <li class="text-danger" v-for="err in serverErrors.text" :key="err">{{err}}</li>
+                  </ul>
+                </div>
                 <br />
                 <button type="button" class="btn btn-primary" @click="createQuestion(meetup.id)">Ask</button>
               </div>
@@ -42,7 +55,7 @@
           </div>
         </div>
         <br />
-        <router-link to="/" class="btn btn-primary">meetups</router-link>
+        <router-link to="/" class="btn btn-primary">All Meetups</router-link>
         <Logout></Logout>
       </div>
     </div>
@@ -74,7 +87,8 @@ export default {
       questions: [],
       upvotes: null,
       downvotes: null,
-      question: null
+      question: null,
+      serverErrors: {}
     };
   },
 
@@ -107,6 +121,9 @@ export default {
           successToast(this, "added!");
         })
         .catch(err => {
+          if (err.response) {
+            this.serverErrors = err.response.data;
+          }
           errorToast(this, "oops! error, retry.", err);
         });
     },

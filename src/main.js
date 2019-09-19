@@ -6,7 +6,6 @@ import VueToasted from 'vue-toasted'
 import App from './App'
 import router from './router'
 
-
 Vue.config.productionTip = false
 Vue.use(VueToasted)
 

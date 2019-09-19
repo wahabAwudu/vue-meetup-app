@@ -1,8 +1,12 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-md-8 offset-md-2">
-        <h1 class="mt-5 text-center text-primary">Meet-Ups</h1>
+      <div class="col-md-8 offset-md-2 mb-3">
+        <div class="mt-5">
+          <router-link to="/meetups/add-new" class="btn btn-primary">New Meetup</router-link>
+          <Logout></Logout>
+        </div>
+        <h1 class="mt-5 text-center text-primary">MeetUps</h1>
 
         <div class="card mt-2" v-for="meetup in meetups" :key="meetup.id">
           <div class="card-header">
@@ -11,12 +15,14 @@
             </h3>
           </div>
           <div class="card-body">
-            <p>{{meetup.description}}</p>
+            <p>Date: {{meetup.date}}</p>
+            <p>Venue: {{meetup.venue}}</p>
+            <router-link :to="'/meetups/' + meetup.id" class="btn btn-primary">View</router-link>
           </div>
         </div>
         <p v-if="meetups.length === 0">No Meetups Available</p>
         <br />
-        <router-link to="/meetups/add-new" class="btn btn-primary">add new</router-link>
+        <router-link to="/meetups/add-new" class="btn btn-primary">New Meetup</router-link>
         <Logout></Logout>
       </div>
     </div>
@@ -49,26 +55,12 @@ export default {
         this.meetups = res.data;
       })
       .catch(err => {
-        errorToast(this, "error, retry.", err);
+        errorToast(this, "error retrieving meetups, retry.", err);
       });
   },
 
   methods: {
-    createQuestion(meetup_id) {
-      const payload = {
-        meetup_id: meetup_id,
-        text: question
-      };
-
-      axios
-        .post(questionsUrl, payload, { headers: getHeaders() })
-        .then(res => {
-          this.meetups = res.data;
-        })
-        .catch(err => {
-          alert("error");
-        });
-    }
+    //
   }
 };
 </script>
